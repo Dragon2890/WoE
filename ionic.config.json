@@ -1,5 +1,7 @@
 {
   "name": "WE",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
