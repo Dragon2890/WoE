@@ -53,7 +53,6 @@ export class HomePage implements OnInit {
   constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.setOpen(true, "tt0110912")
 
   }
 
