@@ -16,17 +16,45 @@
   <ion-input class="Centre" style="width: 144px;" type="text" [(ngModel)]="inputFieldString" labelPlacement="floating">
     <div slot="label">
       <ion-text color="tertiary" class="ion-text-centre">
-        Add to list
+        Movie Name
       </ion-text>
     </div>
   </ion-input>
-  <ion-button class="Centre" style="font-size: xx-large;" (click)="AddList()" >
-    Add
+  <ion-button class="Button" style="font-size: xx-large;" (click)="Search()" >
+    Search
   </ion-button>
 
-  <ion-list>
-    <ion-item *ngFor="let input of listInput">
-      {{input}}
-    </ion-item>
-  </ion-list>
+  <ion-card *ngFor="let movie of moviesOutput; let i = index" color="tertiary">
+    <ion-card-header>
+      <ion-card-subtitle class="CardSubtitle">
+        {{i+1}}
+      </ion-card-subtitle>
+      <ion-card-title class="CardTitle">
+        {{movie.Title}}
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      Year: {{movie.Year}}
+    </ion-card-content>
+
+    <ion-button class="ViewMore" (click)="setOpen(true, movie.imdbID)">
+      View More
+    </ion-button>
+  </ion-card>
+
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+     <ion-content>
+      <ion-header class="Centre">
+        {{fullMovie.Title}}
+      </ion-header>
+      
+     </ion-content>
+     <ion-button (click)="setOpen(false)">
+      Close
+    </ion-button>
+   </ng-template>
+  </ion-modal>
 </ion-content>
+
