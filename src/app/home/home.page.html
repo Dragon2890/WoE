@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
-  <ion-toolbar >
+  <ion-toolbar>
     <ion-title>
-     
+
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -20,7 +20,7 @@
       </ion-text>
     </div>
   </ion-input>
-  <ion-button class="Button" style="font-size: xx-large;" (click)="Search()" >
+  <ion-button class="Button" style="font-size: xx-large;" (click)="Search()">
     Search
   </ion-button>
 
@@ -45,16 +45,60 @@
 
   <ion-modal [isOpen]="isModalOpen">
     <ng-template>
-     <ion-content>
-      <ion-header class="Centre">
-        {{fullMovie.Title}}
-      </ion-header>
-      
-     </ion-content>
-     <ion-button (click)="setOpen(false)">
-      Close
-    </ion-button>
-   </ng-template>
+      <ion-content>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>
+              {{fullMovie.Title}}
+            </ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-card color="dark">
+          <ion-card-header class="CardTitle">
+            {{fullMovie.Type}} Details
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-row class>
+                <ion-item>
+                  <img src="{{fullMovie.Poster}}">
+                </ion-item>
+                <ion-item>
+                  Release Date: {{fullMovie.Released}}
+                </ion-item>
+                <ion-item>
+                  Genre: {{fullMovie.Genre}}
+                </ion-item>
+                <ion-item>
+                  Plot:  {{fullMovie.Plot}}
+                </ion-item>
+                <ion-item>
+                  Runtime:  {{fullMovie.Runtime}}
+                </ion-item>
+                <ion-item>
+                  Metascore:  {{fullMovie.Metascore}}
+                </ion-item>
+                <ion-item>
+                  Awards:  {{fullMovie.Awards}}
+                </ion-item>
+                <ion-item>
+                  Actors:  {{fullMovie.Actors}}
+                </ion-item>
+                <ion-item>
+                  Director:  {{fullMovie.Director}}
+                </ion-item>
+                <ion-item>
+                  Writer:  {{fullMovie.Writer}}
+                </ion-item>
+              </ion-row>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-content>
+      <ion-button (click)="setOpen(false)">
+        Close
+      </ion-button>
+    </ng-template>
   </ion-modal>
 </ion-content>
-
