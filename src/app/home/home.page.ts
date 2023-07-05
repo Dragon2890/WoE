@@ -24,7 +24,6 @@ export interface FullMovie {
   Poster: string;
   Production: string;
   Rated: string;
-  // Ratings: Array(3) [{… }, {… }, {… }]
   Released: string;
   Response: string;
   Runtime: string;
@@ -36,6 +35,12 @@ export interface FullMovie {
   imdbID: string;
   imdbRating: string;
   imdbVotes: string;
+  Ratings: Rating[];
+}
+
+export interface Rating {
+  Source: string;
+  Value: string;
 }
 
 @Component({
@@ -46,13 +51,16 @@ export interface FullMovie {
 export class HomePage implements OnInit {
 
   inputFieldString: string = ""
-  moviesOutput: Movie[] = []
 
+  moviesOutput: Movie[] = []
+  Ratings: Rating[] = []
+  
   fullMovie: FullMovie = {} as FullMovie
 
   constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
+    this.SetOpen(true, "tt0110912")
 
   }
 
@@ -69,7 +77,7 @@ export class HomePage implements OnInit {
 
   isModalOpen = false;
 
-  setOpen(isOpen: boolean, imdbID?: string) {
+  SetOpen(isOpen: boolean, imdbID?: string) {
 
     if (imdbID) {
 
@@ -83,4 +91,5 @@ export class HomePage implements OnInit {
 
   }
 }
+
 
