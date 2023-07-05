@@ -35,10 +35,10 @@
     </ion-card-header>
 
     <ion-card-content>
-      Year: {{movie.Year}}
+      {{movie.Year}}
     </ion-card-content>
 
-    <ion-button class="ViewMore" (click)="setOpen(true, movie.imdbID)">
+    <ion-button class="ViewMore" (click)="SetOpen(true, movie.imdbID)">
       View More
     </ion-button>
   </ion-card>
@@ -51,44 +51,52 @@
             {{fullMovie.Type}} Details
           </ion-card-header>
           <ion-card-content>
-            <ion-list>
-              <ion-row class>
-                <ion-item>
-                  <img src="{{fullMovie.Poster}}">
-                </ion-item>
-                <ion-item>
-                  Release Date: {{fullMovie.Released}}
-                </ion-item>
-                <ion-item>
-                  Genre: {{fullMovie.Genre}}
-                </ion-item>
-                <ion-item>
-                  Plot:  {{fullMovie.Plot}}
-                </ion-item>
-                <ion-item>
-                  Runtime:  {{fullMovie.Runtime}}
-                </ion-item>
-                <ion-item>
-                  Metascore:  {{fullMovie.Metascore}}
-                </ion-item>
-                <ion-item>
-                  Awards:  {{fullMovie.Awards}}
-                </ion-item>
-                <ion-item>
-                  Actors:  {{fullMovie.Actors}}
-                </ion-item>
-                <ion-item>
-                  Director:  {{fullMovie.Director}}
-                </ion-item>
-                <ion-item>
-                  Writer:  {{fullMovie.Writer}}
-                </ion-item>
-              </ion-row>
-            </ion-list>
+            <ion-item>
+              <img src="{{fullMovie.Poster}}">
+            </ion-item>
+            <ion-item>
+              Release Date: {{fullMovie.Released}}
+            </ion-item>
+            <ion-item>
+              Genre: {{fullMovie.Genre}}
+            </ion-item>
+            <ion-item>
+              Plot: {{fullMovie.Plot}}
+            </ion-item>
+            <ion-item>
+              Runtime: {{fullMovie.Runtime}}
+            </ion-item>
+            <ion-item>
+              Director: {{fullMovie.Director}}
+            </ion-item>
+            <ion-item>
+              Writer: {{fullMovie.Writer}}
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card color="dark">
+          <ion-card-content>
+            <ion-card-title class="CardTitle">
+              Ratings
+            </ion-card-title>
+            <ion-item>
+              Awards: {{fullMovie.Awards}}
+            </ion-item>
+            <ion-item *ngFor="let Rating of fullMovie.Ratings">
+              {{Rating.Source}}
+              {{Rating.Value}}
+            </ion-item>
+            <ion-item>
+              imdbRating: {{fullMovie.imdbRating}}
+            </ion-item>
+            <ion-item>
+              imdbVotes: {{fullMovie.imdbVotes}}
+            </ion-item>
           </ion-card-content>
         </ion-card>
       </ion-content>
-      <ion-button (click)="setOpen(false)">
+      <ion-button (click)="SetOpen(false)">
         Close
       </ion-button>
     </ng-template>
