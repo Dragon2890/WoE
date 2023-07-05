@@ -27,7 +27,8 @@
 }
 
 .Centre {
-  margin-left: 25%;
+  align-self: center;
+  vertical-align: middle;
 }
 
 .Button {
@@ -45,4 +46,8 @@
 
 .ViewMore {
   width: 296px;
+}
+
+.Error {
+  background-color: red;
 }

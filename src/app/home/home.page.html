@@ -20,9 +20,11 @@
       </ion-text>
     </div>
   </ion-input>
-  <ion-button class="Button" style="font-size: xx-large;" (click)="Search()">
+  <ion-button class="Button" ion-justify-content-center style="font-size: xx-large;" (click)="Search()">
     Search
   </ion-button>
+  <ion-alert [isOpen]="isAlertOpen" header="Alert" subHeader="Important message" [message]="errorMessage" class="Error">
+  </ion-alert>
 
   <ion-card *ngFor="let movie of moviesOutput; let i = index" color="tertiary">
     <ion-card-header>

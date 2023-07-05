@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { LoadingController } from '@ionic/angular';
 
 export interface Movie {
   Title: string;
@@ -51,16 +52,21 @@ export interface Rating {
 export class HomePage implements OnInit {
 
   inputFieldString: string = ""
+  errorMessage: string = ""
 
   moviesOutput: Movie[] = []
   Ratings: Rating[] = []
-  
+
+  isAlertOpen: boolean = false
+
   fullMovie: FullMovie = {} as FullMovie
 
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(private router: Router, private http: HttpClient, private loadingCtrl: LoadingController) { }
+
+  public alertButtons = ['OK'];
 
   ngOnInit(): void {
-    this.SetOpen(true, "tt0110912")
+    // this.SetOpen(true, "tt0110912")
 
   }
 
@@ -68,11 +74,45 @@ export class HomePage implements OnInit {
     this.router.navigate(['/page2'])
   }
 
-  Search() {
-    this.http.get("http://www.omdbapi.com/?apikey=4ebba5e1&s=" + this.inputFieldString).subscribe((res: any) => {
-      console.log(res.Search)
-      this.moviesOutput = res.Search
-    })
+  async Search() {
+    this.isAlertOpen = false
+    const loading = await this.loadingCtrl.create({
+      duration: 1000000000000,
+    });
+
+    loading.present();
+
+    try {
+      this.http.get("http://www.omdbapi.com/?apikey=4ebba5e1&s=" + this.inputFieldString).subscribe({
+        next: (res: any) => {
+          console.log(res.Search)
+          this.moviesOutput = res.Search
+          loading.dismiss();
+
+          console.log(res)
+
+          if (res.Search === undefined) {
+            this.isAlertOpen = true
+            this.errorMessage = res?.Error;
+
+          }
+          // else {{
+
+          // }}
+
+        }, error: (err: any) => {
+          console.warn("there is an error", err)
+          this.isAlertOpen = true
+          this.errorMessage = err.message
+        }
+      })
+
+    }
+
+    catch (err: any) {
+      console.log("error", err)
+    }
+
   }
 
   isModalOpen = false;
@@ -90,6 +130,5 @@ export class HomePage implements OnInit {
     this.isModalOpen = isOpen
 
   }
+
 }
-
-
