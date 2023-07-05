@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: 'WE',
   webDir: 'www',
   server: {
-    androidScheme: 'https'
+    cleartext: true
   }
 };
 
