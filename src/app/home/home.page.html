@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-		<ion-title> My Movie App </ion-title>
+    <ion-title> My Movie App </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -38,7 +38,7 @@
       {{movie.Year}}
     </ion-card-content>
 
-    <ion-button class="ViewMore" (click)="SetOpen(true, movie.imdbID)">
+    <ion-button class="ViewMore" (click)="SetOpen(movie.imdbID)">
       View More
     </ion-button>
   </ion-card>
@@ -96,7 +96,7 @@
           </ion-card-content>
         </ion-card>
       </ion-content>
-      <ion-button (click)="SetOpen(false)">
+      <ion-button (click)="ToggleModal(false)">
         Close
       </ion-button>
     </ng-template>

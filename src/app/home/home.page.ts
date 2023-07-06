@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { LoadingController } from '@ionic/angular';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { delay } from 'rxjs';
 
 export interface Movie {
   Title: string;
@@ -83,6 +84,14 @@ export class HomePage implements OnInit {
     this.router.navigate(['/page2'])
   }
 
+  async Load() {
+    const loading = await this.loadingCtrl.create({
+      duration: 1000000000000,
+    })
+
+    loading.present();
+  }
+
   // loading wheel 
 
   async Search() {
@@ -135,20 +144,27 @@ export class HomePage implements OnInit {
 
   // open modal of movie clicked on
 
-  SetOpen(isOpen: boolean, imdbID?: string) {
+  async SetOpen(imdbID?: string) {
+
+    this.Load()
+
+    this.fullMovie = {} as FullMovie
 
     if (imdbID) {
 
       this.http.get("https://www.omdbapi.com/?apikey=4ebba5e1&i=" + imdbID).subscribe((res: any) => {
         console.log(res)
         this.fullMovie = res
+        this.ToggleModal(true)
       })
     }
 
-    this.isModalOpen = isOpen
-
     this.hapticsImpactLight()
 
+  }
+
+  ToggleModal(value: boolean) {
+    this.isModalOpen = value
   }
 
 }
