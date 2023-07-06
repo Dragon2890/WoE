@@ -1,5 +1,8 @@
 {
     "recommendations": [
-      "ionic.ionic"
-    ]
+			"ionic.ionic",
+			"github.vscode-pull-request-github",
+			"angular.ng-template",
+			"esbenp.prettier-vscode"
+		]
 }
