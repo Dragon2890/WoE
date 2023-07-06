@@ -11,35 +11,42 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-input class="Centre" style="width: 144px;" type="text" [(ngModel)]="inputFieldString" labelPlacement="floating">
+  <ion-input
+    class="Centre"
+    style="width: 144px"
+    type="text"
+    [(ngModel)]="inputFieldString"
+    labelPlacement="floating"
+  >
     <div slot="label">
-      <ion-text color="tertiary" class="ion-text-centre">
-        Movie Name
-      </ion-text>
+      <ion-text color="tertiary" class="ion-text-centre"> Movie Name </ion-text>
     </div>
   </ion-input>
-  <ion-button class="Button" ion-justify-content-center style="font-size: xx-large;" (click)="Search()">
+  <ion-button
+    class="Button"
+    ion-justify-content-center
+    style="font-size: xx-large"
+    (click)="Search()"
+  >
     Search
   </ion-button>
-  <ion-button (click)="startScan()">
-    Qr Code
-  </ion-button>
-  <ion-alert [isOpen]="isAlertOpen" header="Alert" subHeader="Important message" [message]="errorMessage" class="Error">
+  <ion-button (click)="startScan()"> Qr Code </ion-button>
+  <ion-alert
+    [isOpen]="isAlertOpen"
+    header="Alert"
+    subHeader="Important message"
+    [message]="errorMessage"
+    class="Error"
+  >
   </ion-alert>
 
   <ion-card *ngFor="let movie of moviesOutput; let i = index" color="tertiary">
     <ion-card-header>
-      <ion-card-subtitle class="CardSubtitle">
-        {{i+1}}
-      </ion-card-subtitle>
-      <ion-card-title class="CardTitle">
-        {{movie.Title}}
-      </ion-card-title>
+      <ion-card-subtitle class="CardSubtitle"> {{i+1}} </ion-card-subtitle>
+      <ion-card-title class="CardTitle"> {{movie.Title}} </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
-      {{movie.Year}}
-    </ion-card-content>
+    <ion-card-content> {{movie.Year}} </ion-card-content>
 
     <ion-button class="ViewMore" (click)="OpenModal(movie.imdbID)">
       View More
@@ -55,53 +62,30 @@
           </ion-card-header>
           <ion-card-content>
             <ion-item>
-              <img src="{{fullMovie.Poster}}">
+              <img src="{{fullMovie.Poster}}" />
             </ion-item>
-            <ion-item>
-              Release Date: {{fullMovie.Released}}
-            </ion-item>
-            <ion-item>
-              Genre: {{fullMovie.Genre}}
-            </ion-item>
-            <ion-item>
-              Plot: {{fullMovie.Plot}}
-            </ion-item>
-            <ion-item>
-              Runtime: {{fullMovie.Runtime}}
-            </ion-item>
-            <ion-item>
-              Director: {{fullMovie.Director}}
-            </ion-item>
-            <ion-item>
-              Writer: {{fullMovie.Writer}}
-            </ion-item>
+            <ion-item> Release Date: {{fullMovie.Released}} </ion-item>
+            <ion-item> Genre: {{fullMovie.Genre}} </ion-item>
+            <ion-item> Plot: {{fullMovie.Plot}} </ion-item>
+            <ion-item> Runtime: {{fullMovie.Runtime}} </ion-item>
+            <ion-item> Director: {{fullMovie.Director}} </ion-item>
+            <ion-item> Writer: {{fullMovie.Writer}} </ion-item>
           </ion-card-content>
         </ion-card>
 
         <ion-card color="dark">
           <ion-card-content>
-            <ion-card-title class="CardTitle">
-              Ratings
-            </ion-card-title>
-            <ion-item>
-              Awards: {{fullMovie.Awards}}
-            </ion-item>
+            <ion-card-title class="CardTitle"> Ratings </ion-card-title>
+            <ion-item> Awards: {{fullMovie.Awards}} </ion-item>
             <ion-item *ngFor="let Rating of fullMovie.Ratings">
-              {{Rating.Source}}
-              {{Rating.Value}}
+              {{Rating.Source}} {{Rating.Value}}
             </ion-item>
-            <ion-item>
-              imdbRating: {{fullMovie.imdbRating}}
-            </ion-item>
-            <ion-item>
-              imdbVotes: {{fullMovie.imdbVotes}}
-            </ion-item>
+            <ion-item> imdbRating: {{fullMovie.imdbRating}} </ion-item>
+            <ion-item> imdbVotes: {{fullMovie.imdbVotes}} </ion-item>
           </ion-card-content>
         </ion-card>
       </ion-content>
-      <ion-button (click)="ToggleModal(false)">
-        Close
-      </ion-button>
+      <ion-button (click)="ToggleModal(false)"> Close </ion-button>
     </ng-template>
   </ion-modal>
 </ion-content>

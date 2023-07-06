@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { LoadingController } from '@ionic/angular';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { delay } from 'rxjs';
-import { BarcodeScanner } from '@capacitor-community/barcode-scanner'
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { Capacitor } from '@capacitor/core';
 
 export interface Movie {
@@ -54,50 +54,52 @@ export interface Rating {
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
+  inputFieldString: string = '';
+  errorMessage: string = '';
 
-  inputFieldString: string = ""
-  errorMessage: string = ""
+  moviesOutput: Movie[] = [];
+  Ratings: Rating[] = [];
 
-  moviesOutput: Movie[] = []
-  Ratings: Rating[] = []
+  isAlertOpen: boolean = false;
 
-  isAlertOpen: boolean = false
+  fullMovie: FullMovie = {} as FullMovie;
 
-  fullMovie: FullMovie = {} as FullMovie
-
-  //  haptic vairiable 
+  //  haptic vairiable
 
   hapticsImpactLight = async () => {
-    await Haptics.impact({ style: ImpactStyle.Light })
+    await Haptics.impact({ style: ImpactStyle.Light });
   };
 
-  constructor(private router: Router, private http: HttpClient, private loadingCtrl: LoadingController) { }
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private loadingCtrl: LoadingController
+  ) {}
 
   public alertButtons = ['OK'];
 
   ngOnInit(): void {
     // this.SetOpen(true, "tt0110912")
-
   }
 
   // page navigation
 
   NextPage() {
-    this.router.navigate(['/page2'])
+    this.router.navigate(['/page2']);
   }
 
   async Load() {
     const loading = await this.loadingCtrl.create({
       duration: 1000000000000,
-    })
+    });
 
     loading.present();
   }
 
-  // loading wheel 
+  // loading wheel
 
   async Search() {
-    this.isAlertOpen = false
+    this.isAlertOpen = false;
     const loading = await this.loadingCtrl.create({
       duration: 1000000000000,
     });
@@ -105,41 +107,40 @@ export class HomePage implements OnInit {
     loading.present();
 
     // give user feedback when they search
-    this.hapticsImpactLight()
+    this.hapticsImpactLight();
 
     // error catching when seatching
 
     try {
-      this.http.get("https://www.omdbapi.com/?apikey=4ebba5e1&s=" + this.inputFieldString).subscribe({
-        next: (res: any) => {
-          console.log(res.Search)
-          this.moviesOutput = res.Search
-          loading.dismiss();
+      this.http
+        .get(
+          'https://www.omdbapi.com/?apikey=4ebba5e1&s=' + this.inputFieldString
+        )
+        .subscribe({
+          next: (res: any) => {
+            console.log(res.Search);
+            this.moviesOutput = res.Search;
+            loading.dismiss();
 
-          console.log(res)
+            console.log(res);
 
-          if (res.Search === undefined) {
-            this.isAlertOpen = true
-            this.errorMessage = res?.Error;
+            if (res.Search === undefined) {
+              this.isAlertOpen = true;
+              this.errorMessage = res?.Error;
+            }
+            // else {{
 
-          }
-          // else {{
-
-          // }}
-
-        }, error: (err: any) => {
-          console.warn("there is an error", err)
-          this.isAlertOpen = true
-          this.errorMessage = err.message
-        }
-      })
-
+            // }}
+          },
+          error: (err: any) => {
+            console.warn('there is an error', err);
+            this.isAlertOpen = true;
+            this.errorMessage = err.message;
+          },
+        });
+    } catch (err: any) {
+      console.log('error', err);
     }
-
-    catch (err: any) {
-      console.log("error", err)
-    }
-
   }
 
   isModalOpen = false;
@@ -147,40 +148,38 @@ export class HomePage implements OnInit {
   // open modal of movie clicked on
 
   async OpenModal(imdbID?: string) {
+    this.Load();
 
-    this.Load()
-
-    this.fullMovie = {} as FullMovie
+    this.fullMovie = {} as FullMovie;
 
     if (imdbID) {
-
-      this.http.get("https://www.omdbapi.com/?apikey=4ebba5e1&i=" + imdbID).subscribe((res: any) => {
-        console.log(res)
-        if (res.Response == "False") {
-          this.isAlertOpen = true
-          this.errorMessage = res?.Error;
-        }
-        else {
-          this.fullMovie = res
-          this.ToggleModal(true)
-        }
-      })
+      this.http
+        .get('https://www.omdbapi.com/?apikey=4ebba5e1&i=' + imdbID)
+        .subscribe((res: any) => {
+          console.log(res);
+          if (res.Response == 'False') {
+            this.isAlertOpen = true;
+            this.errorMessage = res?.Error;
+          } else {
+            this.fullMovie = res;
+            this.ToggleModal(true);
+          }
+        });
     }
 
-    this.hapticsImpactLight()
-
+    this.hapticsImpactLight();
   }
 
   ToggleModal(value: boolean) {
-    this.isModalOpen = value
+    this.isModalOpen = value;
   }
 
   async startScan() {
-    await BarcodeScanner.checkPermission({ force: true }).then(async res => {
+    await BarcodeScanner.checkPermission({ force: true }).then(async (res) => {
       console.log(res);
 
       document.getElementById('ionApp')!.classList.add('qrEnabled');
-      document.body.style.background = "transparent";
+      document.body.style.background = 'transparent';
 
       BarcodeScanner.hideBackground(); // make background of WebView transparent
 
@@ -190,10 +189,9 @@ export class HomePage implements OnInit {
       if (result.hasContent) {
         this.closeQrCode();
         console.log(result.content); // log the raw scanned content
-        this.OpenModal(result.content)
+        this.OpenModal(result.content);
       }
     });
-
   }
 
   closeQrCode() {
@@ -204,7 +202,6 @@ export class HomePage implements OnInit {
     }
     document.getElementById('ionApp')!.classList.remove('qrEnabled');
   }
-
 }
 
 // this.http.get("https://www.omdbapi.com/?apikey=4ebba5e1&s=" + this.inputFieldString)
