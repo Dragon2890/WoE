@@ -87,6 +87,7 @@ export class HomePage implements OnInit {
 
     loading.present();
 
+		// give user feedback when they search
     this.hapticsImpactLight()
 
     try {
