@@ -21,6 +21,9 @@
   <ion-button class="Button" ion-justify-content-center style="font-size: xx-large;" (click)="Search()">
     Search
   </ion-button>
+  <ion-button (click)="startScan()">
+    Qr Code
+  </ion-button>
   <ion-alert [isOpen]="isAlertOpen" header="Alert" subHeader="Important message" [message]="errorMessage" class="Error">
   </ion-alert>
 
@@ -38,7 +41,7 @@
       {{movie.Year}}
     </ion-card-content>
 
-    <ion-button class="ViewMore" (click)="SetOpen(movie.imdbID)">
+    <ion-button class="ViewMore" (click)="OpenModal(movie.imdbID)">
       View More
     </ion-button>
   </ion-card>

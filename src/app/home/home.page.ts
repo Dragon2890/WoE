@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { LoadingController } from '@ionic/angular';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { delay } from 'rxjs';
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner'
+import { Capacitor } from '@capacitor/core';
 
 export interface Movie {
   Title: string;
@@ -144,7 +146,7 @@ export class HomePage implements OnInit {
 
   // open modal of movie clicked on
 
-  async SetOpen(imdbID?: string) {
+  async OpenModal(imdbID?: string) {
 
     this.Load()
 
@@ -154,8 +156,14 @@ export class HomePage implements OnInit {
 
       this.http.get("https://www.omdbapi.com/?apikey=4ebba5e1&i=" + imdbID).subscribe((res: any) => {
         console.log(res)
-        this.fullMovie = res
-        this.ToggleModal(true)
+        if (res.Response == "False") {
+          this.isAlertOpen = true
+          this.errorMessage = res?.Error;
+        }
+        else {
+          this.fullMovie = res
+          this.ToggleModal(true)
+        }
       })
     }
 
@@ -167,4 +175,36 @@ export class HomePage implements OnInit {
     this.isModalOpen = value
   }
 
+  async startScan() {
+    await BarcodeScanner.checkPermission({ force: true }).then(async res => {
+      console.log(res);
+
+      document.getElementById('ionApp')!.classList.add('qrEnabled');
+      document.body.style.background = "transparent";
+
+      BarcodeScanner.hideBackground(); // make background of WebView transparent
+
+      const result = await BarcodeScanner.startScan(); // start scanning and wait for a result
+
+      // if the result has content
+      if (result.hasContent) {
+        this.closeQrCode();
+        console.log(result.content); // log the raw scanned content
+        this.OpenModal(result.content)
+      }
+    });
+
+  }
+
+  closeQrCode() {
+    console.log('closeQR');
+    if (Capacitor.isNativePlatform()) {
+      BarcodeScanner.stopScan();
+      BarcodeScanner.showBackground();
+    }
+    document.getElementById('ionApp')!.classList.remove('qrEnabled');
+  }
+
 }
+
+// this.http.get("https://www.omdbapi.com/?apikey=4ebba5e1&s=" + this.inputFieldString)
