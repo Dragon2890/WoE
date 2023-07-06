@@ -99,7 +99,7 @@ export class HomePage implements OnInit {
     // error catching when seatching
 
     try {
-      this.http.get("http://www.omdbapi.com/?apikey=4ebba5e1&s=" + this.inputFieldString).subscribe({
+      this.http.get("https://www.omdbapi.com/?apikey=4ebba5e1&s=" + this.inputFieldString).subscribe({
         next: (res: any) => {
           console.log(res.Search)
           this.moviesOutput = res.Search
@@ -139,7 +139,7 @@ export class HomePage implements OnInit {
 
     if (imdbID) {
 
-      this.http.get("http://www.omdbapi.com/?apikey=4ebba5e1&i=" + imdbID).subscribe((res: any) => {
+      this.http.get("https://www.omdbapi.com/?apikey=4ebba5e1&i=" + imdbID).subscribe((res: any) => {
         console.log(res)
         this.fullMovie = res
       })
