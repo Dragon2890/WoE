@@ -1,0 +1,6 @@
+# ignore huge file
+in-memory-data.service.ts
+# ignore files processed with other tools
+package.json
+package-lock.json
+dist
