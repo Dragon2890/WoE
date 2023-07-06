@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { LoadingController } from '@ionic/angular';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
 export interface Movie {
   Title: string;
@@ -61,6 +62,10 @@ export class HomePage implements OnInit {
 
   fullMovie: FullMovie = {} as FullMovie
 
+  hapticsImpactLight = async () => {
+    await Haptics.impact({ style: ImpactStyle.Light })
+  };
+
   constructor(private router: Router, private http: HttpClient, private loadingCtrl: LoadingController) { }
 
   public alertButtons = ['OK'];
@@ -81,6 +86,8 @@ export class HomePage implements OnInit {
     });
 
     loading.present();
+
+    this.hapticsImpactLight()
 
     try {
       this.http.get("http://www.omdbapi.com/?apikey=4ebba5e1&s=" + this.inputFieldString).subscribe({
@@ -128,6 +135,8 @@ export class HomePage implements OnInit {
     }
 
     this.isModalOpen = isOpen
+
+    this.hapticsImpactLight()
 
   }
 
