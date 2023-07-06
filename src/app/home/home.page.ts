@@ -62,6 +62,8 @@ export class HomePage implements OnInit {
 
   fullMovie: FullMovie = {} as FullMovie
 
+  //  haptic vairiable 
+
   hapticsImpactLight = async () => {
     await Haptics.impact({ style: ImpactStyle.Light })
   };
@@ -75,9 +77,13 @@ export class HomePage implements OnInit {
 
   }
 
+  // page navigation
+
   NextPage() {
     this.router.navigate(['/page2'])
   }
+
+  // loading wheel 
 
   async Search() {
     this.isAlertOpen = false
@@ -87,8 +93,10 @@ export class HomePage implements OnInit {
 
     loading.present();
 
-		// give user feedback when they search
+    // give user feedback when they search
     this.hapticsImpactLight()
+
+    // error catching when seatching
 
     try {
       this.http.get("http://www.omdbapi.com/?apikey=4ebba5e1&s=" + this.inputFieldString).subscribe({
@@ -124,6 +132,8 @@ export class HomePage implements OnInit {
   }
 
   isModalOpen = false;
+
+  // open modal of movie clicked on
 
   SetOpen(isOpen: boolean, imdbID?: string) {
 
